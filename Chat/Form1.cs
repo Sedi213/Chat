@@ -42,8 +42,79 @@ namespace Chat
                 Thread serverThread = new Thread(new ThreadStart(ServerStart));
                 serverThread.Start();
             }finally { }
-        } 
-        
+        }
+        private void ServerStart()
+        {
+            while (true)
+            {
+                try
+                {
+                    TcpClient client = listener.AcceptTcpClient();
+                    clients.Add(client);
+                }
+                catch { break; }
+                Thread clientThread = new Thread(new ParameterizedThreadStart(Process));
+                clientThread.Start(clients.Count);
+            }
+        }
+
+        private void Process(object IDclient1)
+        {
+            int id = (int)IDclient1 - 1;
+            TcpClient localClient = clients[id];
+
+            NetworkStream localStream = null;
+            try
+            {
+                localStream = localClient.GetStream();
+                byte[] data = new byte[256]; // буфер 
+                while (true)
+                {
+
+                    AddTextSafe("\n");
+                    int bytes = 0;
+                    do
+                    {
+                        bytes = localStream.Read(data, 0, data.Length);
+                        AddTextSafe(Encoding.Unicode.GetString(data, 0, bytes));
+
+                    }
+                    while (localStream.DataAvailable);
+
+                    SendAllClientMSG();
+
+                }
+            }
+            finally
+            {
+                if (localStream != null)
+                    localStream.Close();
+                if (localClient != null)
+                    localClient.Close();
+            }
+        }
+
+
+        private void SendAllClientMSG()
+        {
+            byte[] data = Encoding.Unicode.GetBytes(label1.Text);
+            NetworkStream localStream = null;
+            for (int i = 0; i < clients.Count; i++)
+            {
+                localStream = clients[i].GetStream();
+                localStream.Write(data, 0, data.Length);
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                listener.Stop();
+            }
+            catch { }
+        }
+
         private void btnConnect_Click(object sender, EventArgs e)
         {
             string address = textBox1.Text;
@@ -61,39 +132,19 @@ namespace Chat
             {
                 client = new TcpClient(address, 8888);
                 stream = client.GetStream();
-            } finally {}
-            
+            }
+            finally { }
+
         }
 
         private void Send_Click(object sender, EventArgs e)
-        {        
-                byte[] data = Encoding.Unicode.GetBytes(textBoxName.Text + " : " + textBox1.Text );
-                stream.Write(data, 0, data.Length);
-        }
-
-
-        private void ServerStart()
-        { 
-            while (true)
-            {
-                try { 
-                    TcpClient client = listener.AcceptTcpClient();
-                    clients.Add(client);
-                }
-                catch { break; }
-                Thread clientThread = new Thread(new ParameterizedThreadStart(Process));
-                clientThread.Start(clients.Count);
-            }
-        }
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            try
-            {
-                listener.Stop();
-            }
-            catch { }
+            byte[] data = Encoding.Unicode.GetBytes(textBoxName.Text + " : " + textBox1.Text);
+            stream.Write(data, 0, data.Length);
         }
+
+
+        
 
         private void AddTextSafe(string text)
         {
@@ -107,56 +158,7 @@ namespace Chat
                 label1.Text += text;
             }
         }
-        private void Process(object IDclient1)
-        {
-            int id =(int)IDclient1-1;
-            TcpClient localClient = clients[id];
-
-            NetworkStream localStream = null;
-            try
-            {
-                localStream = localClient.GetStream();
-                byte[] data = new byte[256]; // буфер 
-                while (true)
-                {
-
-                    AddTextSafe("\n");
-                    int bytes = 0;
-                    do
-                    {
-                        bytes = localStream.Read(data, 0, data.Length);
-                        AddTextSafe(Encoding.Unicode.GetString(data, 0, bytes));
-                        
-                    }
-                    while (localStream.DataAvailable);
-
-                    SendAllClientMSG();
-                   
-                }
-            }
-            finally
-            {
-                if (localStream != null)
-                    localStream.Close();
-                if (localClient != null)
-                    localClient.Close();
-            }
-        }
-
-
-        private void SendAllClientMSG()
-        {
-            
-            byte[] data = Encoding.Unicode.GetBytes(label1.Text);
-            NetworkStream localStream = null;
-            for (int i = 0; i < clients.Count; i++)
-            {
-                localStream = clients[i].GetStream();
-                localStream.Write(data, 0, data.Length);
-            }
-
-
-        }
+        
         private void timer1_Tick(object sender, EventArgs e)
         {
 
