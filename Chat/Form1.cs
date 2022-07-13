@@ -31,15 +31,13 @@ namespace Chat
             btnConnect.Visible=false;
             btnHost.Visible = false;
             textBox1.Visible = false;
-            
+            label1.Location = new Point(0, 0);
+            label1.Text = "Server start";
 
             try
             {
                 listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 8888);
                 listener.Start();
-
-                label1.Location = new Point(0, 0);
-                label1.Text = "Server start";
 
                 Thread serverThread = new Thread(new ThreadStart(ServerStart));
                 serverThread.Start();
@@ -57,14 +55,12 @@ namespace Chat
             label1.Text = "";
             label1.Location = new Point(0, 30);
             textBoxName.Visible = true;
-            timer1.Enabled = true;
+            TimerUpdate.Enabled = true;
 
             try
             {
                 client = new TcpClient(address, 8888);
                 stream = client.GetStream();
-                byte[] data = Encoding.Unicode.GetBytes("connecting");
-                stream.Write(data, 0, data.Length);
             } finally {}
             
         }
@@ -134,9 +130,8 @@ namespace Chat
                     }
                     while (localStream.DataAvailable);
 
-                    
-                    data = Encoding.Unicode.GetBytes(label1.Text);
-                    localStream.Write(data, 0, data.Length);
+                    SendAllClientMSG();
+                   
                 }
             }
             finally
@@ -148,11 +143,23 @@ namespace Chat
             }
         }
 
+
+        private void SendAllClientMSG()
+        {
+            
+            byte[] data = Encoding.Unicode.GetBytes(label1.Text);
+            NetworkStream localStream = null;
+            for (int i = 0; i < clients.Count; i++)
+            {
+                localStream = clients[i].GetStream();
+                localStream.Write(data, 0, data.Length);
+            }
+
+
+        }
         private void timer1_Tick(object sender, EventArgs e)
         {
 
-
-            
             byte[] data = new byte[256];
             StringBuilder builder = new StringBuilder();
             int bytes = 0;
@@ -162,9 +169,8 @@ namespace Chat
                 builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
             }
            
-
-            label1.Text = builder.ToString();
-
+            if(builder.ToString()!="")
+                label1.Text = builder.ToString();
 
         }
     }

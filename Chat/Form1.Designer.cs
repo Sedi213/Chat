@@ -35,7 +35,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.Send = new System.Windows.Forms.Button();
             this.textBoxName = new System.Windows.Forms.TextBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.TimerUpdate = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // btnHost
@@ -93,13 +93,13 @@
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(159, 22);
             this.textBoxName.TabIndex = 5;
-            this.textBoxName.Text = "You nickname";
+            this.textBoxName.Text = "Your nickname";
             this.textBoxName.Visible = false;
             // 
-            // timer1
+            // TimerUpdate
             // 
-            this.timer1.Interval = 3000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.TimerUpdate.Interval = 3000;
+            this.TimerUpdate.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
             // 
@@ -128,7 +128,7 @@
         public System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button Send;
         private System.Windows.Forms.TextBox textBoxName;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer TimerUpdate;
     }
 }
 
