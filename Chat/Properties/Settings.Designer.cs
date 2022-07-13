@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Tenis.Properties
+namespace Chat.Properties
 {
 
 
