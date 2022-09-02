@@ -28,107 +28,80 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.btnHost = new System.Windows.Forms.Button();
             this.btnConnect = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.Send = new System.Windows.Forms.Button();
-            this.textBoxName = new System.Windows.Forms.TextBox();
-            this.TimerUpdate = new System.Windows.Forms.Timer(this.components);
+            this.IpTB = new System.Windows.Forms.TextBox();
+            this.NameTB = new System.Windows.Forms.TextBox();
+            this.LBText = new System.Windows.Forms.ListBox();
+            this.MSGTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
-            // btnHost
-            // 
-            this.btnHost.Location = new System.Drawing.Point(29, 116);
-            this.btnHost.Name = "btnHost";
-            this.btnHost.Size = new System.Drawing.Size(122, 55);
-            this.btnHost.TabIndex = 0;
-            this.btnHost.Text = "Host";
-            this.btnHost.UseVisualStyleBackColor = true;
-            this.btnHost.Click += new System.EventHandler(this.bntHost_Click);
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(166, 116);
+            this.btnConnect.Location = new System.Drawing.Point(284, 7);
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(122, 55);
+            this.btnConnect.Size = new System.Drawing.Size(183, 55);
             this.btnConnect.TabIndex = 1;
             this.btnConnect.Text = "Connect";
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
-            // textBox1
+            // IpTB
             // 
-            this.textBox1.Location = new System.Drawing.Point(63, 72);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(199, 22);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "127.0.0.1";
+            this.IpTB.Location = new System.Drawing.Point(12, 12);
+            this.IpTB.Name = "IpTB";
+            this.IpTB.Size = new System.Drawing.Size(266, 22);
+            this.IpTB.TabIndex = 2;
+            this.IpTB.Text = "127.0.0.1";
             // 
-            // label1
+            // NameTB
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(93, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(149, 29);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Ip to connect";
+            this.NameTB.Location = new System.Drawing.Point(12, 40);
+            this.NameTB.Name = "NameTB";
+            this.NameTB.Size = new System.Drawing.Size(266, 22);
+            this.NameTB.TabIndex = 5;
+            this.NameTB.Text = "Your nickname";
             // 
-            // Send
+            // LBText
             // 
-            this.Send.Location = new System.Drawing.Point(202, 383);
-            this.Send.Name = "Send";
-            this.Send.Size = new System.Drawing.Size(122, 55);
-            this.Send.TabIndex = 4;
-            this.Send.Text = "Send";
-            this.Send.UseVisualStyleBackColor = true;
-            this.Send.Visible = false;
-            this.Send.Click += new System.EventHandler(this.Send_Click);
+            this.LBText.FormattingEnabled = true;
+            this.LBText.ItemHeight = 16;
+            this.LBText.Location = new System.Drawing.Point(12, 78);
+            this.LBText.Name = "LBText";
+            this.LBText.Size = new System.Drawing.Size(454, 292);
+            this.LBText.TabIndex = 6;
             // 
-            // textBoxName
+            // MSGTextBox
             // 
-            this.textBoxName.Location = new System.Drawing.Point(83, 5);
-            this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(159, 22);
-            this.textBoxName.TabIndex = 5;
-            this.textBoxName.Text = "Your nickname";
-            this.textBoxName.Visible = false;
-            // 
-            // TimerUpdate
-            // 
-            this.TimerUpdate.Interval = 3000;
-            this.TimerUpdate.Tick += new System.EventHandler(this.timer1_Tick);
+            this.MSGTextBox.Enabled = false;
+            this.MSGTextBox.Location = new System.Drawing.Point(12, 376);
+            this.MSGTextBox.Name = "MSGTextBox";
+            this.MSGTextBox.Size = new System.Drawing.Size(455, 22);
+            this.MSGTextBox.TabIndex = 7;
+            this.MSGTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MSGTextBox_KeyDown);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(336, 450);
-            this.Controls.Add(this.textBoxName);
-            this.Controls.Add(this.Send);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(479, 411);
+            this.Controls.Add(this.MSGTextBox);
+            this.Controls.Add(this.LBText);
+            this.Controls.Add(this.NameTB);
+            this.Controls.Add(this.IpTB);
             this.Controls.Add(this.btnConnect);
-            this.Controls.Add(this.btnHost);
             this.Name = "Form1";
             this.Text = "Lobby";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnHost;
         private System.Windows.Forms.Button btnConnect;
-        private System.Windows.Forms.TextBox textBox1;
-        public System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button Send;
-        private System.Windows.Forms.TextBox textBoxName;
-        private System.Windows.Forms.Timer TimerUpdate;
+        private System.Windows.Forms.TextBox IpTB;
+        private System.Windows.Forms.TextBox NameTB;
+        private System.Windows.Forms.ListBox LBText;
+        private System.Windows.Forms.TextBox MSGTextBox;
     }
 }
 
